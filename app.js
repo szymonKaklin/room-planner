@@ -13,6 +13,8 @@ class App {
     this.roomSelector = document.getElementById('room-selector');
     this.createRoomForm = document.getElementById('create-room-form');
     this.addFurnitureForm = document.getElementById('add-furniture-form');
+    this.addWindowForm = document.getElementById('add-window-form');
+    this.addDoorForm = document.getElementById('add-door-form');
     this.deleteRoomBtn = document.getElementById('delete-room-btn');
     this.saveBtn = document.getElementById('save-btn');
     this.loadBtn = document.getElementById('load-btn');
@@ -78,6 +80,56 @@ class App {
 
         // Clear form
         this.addFurnitureForm.reset();
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+
+    // Window creation form handler
+    this.addWindowForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const room = this.roomManager.getActiveRoom();
+      if (!room) {
+        alert('Please create and select a room first');
+        return;
+      }
+
+      const wall = document.getElementById('window-wall').value;
+      const width = parseInt(document.getElementById('window-width').value);
+
+      // Add window
+      try {
+        this.roomManager.addWindowToActiveRoom(wall, width);
+        this.render();
+
+        // Clear form
+        this.addWindowForm.reset();
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+
+    // Door creation form handler
+    this.addDoorForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const room = this.roomManager.getActiveRoom();
+      if (!room) {
+        alert('Please create and select a room first');
+        return;
+      }
+
+      const wall = document.getElementById('door-wall').value;
+      const width = parseInt(document.getElementById('door-width').value);
+
+      // Add door
+      try {
+        this.roomManager.addDoorToActiveRoom(wall, width);
+        this.render();
+
+        // Clear form
+        this.addDoorForm.reset();
       } catch (error) {
         alert(error.message);
       }

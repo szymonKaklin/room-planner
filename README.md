@@ -6,16 +6,20 @@ A simple 2D floor plan room planning web app built with vanilla HTML, CSS, and J
 
 - Create rooms with custom dimensions
 - Delete rooms (and all their furniture)
+- **Add windows to walls** (with glass effect and panes)
+- **Add doors to walls** (with wood grain, handles, and swing arcs)
 - Add furniture to rooms with custom dimensions
+- **Each furniture piece gets a unique color from a beautiful palette**
 - Drag and drop furniture to position it
 - Rotate furniture (90-degree increments)
 - Delete furniture
-- **Save room plans to JSON files**
+- **Save room plans to JSON files** (includes windows, doors, and furniture)
 - **Load room plans from JSON files**
 - Automatic collision detection (furniture can't overlap, even when rotated)
 - Automatic bounds checking (furniture stays within room)
 - Switch between multiple rooms
-- Visual feedback for selected furniture
+- Visual feedback for selected furniture (gold border)
+- **Beautiful modern UI with gradients, shadows, and smooth animations**
 
 ## How to Use
 
@@ -33,7 +37,25 @@ A simple 2D floor plan room planning web app built with vanilla HTML, CSS, and J
    - Click "Add Furniture"
    - Furniture will appear at position (10, 10) in the room
 
-4. **Manipulate furniture**:
+4. **Add windows**:
+   - Select which wall (top, bottom, left, right)
+   - Enter window width in pixels
+   - Click "Add Window"
+   - Windows appear with a beautiful glass effect and panes
+   - Click and drag to reposition along the wall
+   - Selected windows show gold highlight
+   - Press **Delete** to remove
+
+5. **Add doors**:
+   - Select which wall (top, bottom, left, right)
+   - Enter door width in pixels
+   - Click "Add Door"
+   - Doors appear with wood grain, gold handles, and swing arcs
+   - Click and drag to reposition along the wall
+   - Selected doors show gold highlight
+   - Press **Delete** to remove
+
+6. **Manipulate furniture**:
    - Click on furniture to select it (highlights in blue)
    - Drag furniture to reposition it
    - Press **R** to rotate 90° clockwise
@@ -42,21 +64,21 @@ A simple 2D floor plan room planning web app built with vanilla HTML, CSS, and J
    - Press **Esc** to deselect
    - Furniture cannot be moved/rotated outside the room or over other furniture
 
-5. **Delete rooms**:
+7. **Delete rooms**:
    - Select a room from the dropdown
    - Click the red "Delete Room" button
    - Confirm deletion (this removes the room and all its furniture)
 
-6. **Switch rooms**:
+8. **Switch rooms**:
    - Use the dropdown menu to switch between different rooms
 
-7. **Save your work**:
-   - Click the green "Save to File" button
+9. **Save your work**:
+   - Click the blue "Save to File" button
    - A JSON file will be downloaded with your room plan
    - Filename format: `room-planner-YYYY-MM-DDTHH-MM-SS.json`
-   - The file contains all rooms, furniture, positions, and rotations
+   - The file contains all rooms, furniture, windows, doors, positions, and rotations
 
-8. **Load saved work**:
+10. **Load saved work**:
    - Click the yellow "Load from File" button
    - Select a previously saved JSON file
    - Your room plan will be restored with all details
@@ -71,10 +93,12 @@ room-planner/
 ├── app.js                  # Main application logic
 ├── models/
 │   ├── Room.js            # Room data model
-│   └── Furniture.js       # Furniture data model
+│   ├── Furniture.js       # Furniture data model
+│   ├── Window.js          # Window data model
+│   └── Door.js            # Door data model
 ├── services/
 │   ├── RoomManager.js     # State management
-│   └── Renderer.js        # Canvas rendering
+│   └── Renderer.js        # Canvas rendering (furniture, windows, doors)
 └── utils/
     ├── collision.js       # Collision detection
     └── drag.js            # Drag and drop handling

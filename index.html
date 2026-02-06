@@ -42,6 +42,38 @@
         </form>
       </section>
 
+      <!-- Add Window Form -->
+      <section>
+        <h3>Add Window</h3>
+        <form id="add-window-form">
+          <select id="window-wall" required>
+            <option value="">Select wall</option>
+            <option value="top">Top Wall</option>
+            <option value="bottom">Bottom Wall</option>
+            <option value="left">Left Wall</option>
+            <option value="right">Right Wall</option>
+          </select>
+          <input type="number" id="window-width" placeholder="Width (px)" min="30" max="200" value="80" required>
+          <button type="submit">Add Window</button>
+        </form>
+      </section>
+
+      <!-- Add Door Form -->
+      <section>
+        <h3>Add Door</h3>
+        <form id="add-door-form">
+          <select id="door-wall" required>
+            <option value="">Select wall</option>
+            <option value="top">Top Wall</option>
+            <option value="bottom">Bottom Wall</option>
+            <option value="left">Left Wall</option>
+            <option value="right">Right Wall</option>
+          </select>
+          <input type="number" id="door-width" placeholder="Width (px)" min="60" max="150" value="80" required>
+          <button type="submit">Add Door</button>
+        </form>
+      </section>
+
       <!-- Save/Load -->
       <section>
         <h3>Save / Load</h3>
@@ -56,11 +88,12 @@
         <ul>
           <li>Create rooms with dimensions</li>
           <li>Add furniture to active room</li>
-          <li>Click furniture to select it</li>
-          <li>Drag furniture to move it</li>
-          <li>Press <strong>R</strong> to rotate clockwise</li>
-          <li>Press <strong>E</strong> to rotate counter-clockwise</li>
-          <li>Press <strong>Delete</strong> to remove furniture</li>
+          <li>Add windows and doors to walls</li>
+          <li>Click furniture/windows/doors to select</li>
+          <li>Drag furniture to move it anywhere</li>
+          <li>Drag windows/doors along their wall</li>
+          <li>Press <strong>R</strong>/<strong>E</strong> to rotate furniture</li>
+          <li>Press <strong>Delete</strong> to remove selected item</li>
           <li>Press <strong>Esc</strong> to deselect</li>
           <li>Use "Delete Room" button to remove room</li>
           <li>Use "Save to File" to export your design</li>
@@ -77,6 +110,8 @@
   <!-- Load modules in dependency order -->
   <script src="models/Room.js"></script>
   <script src="models/Furniture.js"></script>
+  <script src="models/Window.js"></script>
+  <script src="models/Door.js"></script>
   <script src="utils/collision.js"></script>
   <script src="services/RoomManager.js"></script>
   <script src="services/Renderer.js"></script>

@@ -4,6 +4,33 @@ class RoomManager {
     this.activeRoomId = null;
     this.nextRoomId = 1;
     this.nextFurnitureId = 1;
+    this.nextWindowId = 1;
+    this.nextDoorId = 1;
+    this.colorIndex = 0;
+
+    // Beautiful color palette for furniture
+    this.colorPalette = [
+      '#FF6B6B', // Coral Red
+      '#4ECDC4', // Turquoise
+      '#45B7D1', // Sky Blue
+      '#FFA07A', // Light Salmon
+      '#98D8C8', // Mint
+      '#F7DC6F', // Soft Yellow
+      '#BB8FCE', // Lavender
+      '#F8B739', // Orange
+      '#85C1E2', // Powder Blue
+      '#F39C12', // Dark Orange
+      '#1ABC9C', // Teal
+      '#E74C3C', // Red
+      '#3498DB', // Blue
+      '#9B59B6', // Purple
+      '#2ECC71', // Green
+      '#E67E22', // Carrot
+      '#16A085', // Dark Teal
+      '#C0392B', // Dark Red
+      '#8E44AD', // Dark Purple
+      '#27AE60'  // Dark Green
+    ];
   }
 
   createRoom(name, width, height) {
@@ -32,6 +59,10 @@ class RoomManager {
       throw new Error('No active room selected');
     }
 
+    // Get color from palette and cycle
+    const color = this.colorPalette[this.colorIndex];
+    this.colorIndex = (this.colorIndex + 1) % this.colorPalette.length;
+
     // Place furniture at (10, 10) initially
     const furniture = new Furniture(
       this.nextFurnitureId++,
@@ -39,11 +70,49 @@ class RoomManager {
       10,
       10,
       width,
-      height
+      height,
+      0,
+      color
     );
 
     room.addFurniture(furniture);
     return furniture;
+  }
+
+  addWindowToActiveRoom(wall, width) {
+    const room = this.getActiveRoom();
+    if (!room) {
+      throw new Error('No active room selected');
+    }
+
+    // Place window at start of wall initially
+    const window = new Window(
+      this.nextWindowId++,
+      wall,
+      50, // default position 50px from start
+      width
+    );
+
+    room.addWindow(window);
+    return window;
+  }
+
+  addDoorToActiveRoom(wall, width) {
+    const room = this.getActiveRoom();
+    if (!room) {
+      throw new Error('No active room selected');
+    }
+
+    // Place door at start of wall initially
+    const door = new Door(
+      this.nextDoorId++,
+      wall,
+      50, // default position 50px from start
+      width
+    );
+
+    room.addDoor(door);
+    return door;
   }
 
   getAllRooms() {
@@ -78,12 +147,28 @@ class RoomManager {
           y: f.y,
           width: f.width,
           height: f.height,
-          rotation: f.rotation
+          rotation: f.rotation,
+          color: f.color
+        })),
+        windows: room.windows.map(w => ({
+          id: w.id,
+          wall: w.wall,
+          position: w.position,
+          width: w.width
+        })),
+        doors: room.doors.map(d => ({
+          id: d.id,
+          wall: d.wall,
+          position: d.position,
+          width: d.width
         }))
       })),
       activeRoomId: this.activeRoomId,
       nextRoomId: this.nextRoomId,
-      nextFurnitureId: this.nextFurnitureId
+      nextFurnitureId: this.nextFurnitureId,
+      nextWindowId: this.nextWindowId,
+      nextDoorId: this.nextDoorId,
+      colorIndex: this.colorIndex
     };
   }
 
@@ -93,8 +178,11 @@ class RoomManager {
     this.activeRoomId = data.activeRoomId;
     this.nextRoomId = data.nextRoomId;
     this.nextFurnitureId = data.nextFurnitureId;
+    this.nextWindowId = data.nextWindowId || 1;
+    this.nextDoorId = data.nextDoorId || 1;
+    this.colorIndex = data.colorIndex || 0;
 
-    // Recreate rooms and furniture
+    // Recreate rooms, furniture, windows, and doors
     data.rooms.forEach(roomData => {
       const room = new Room(roomData.id, roomData.name, roomData.width, roomData.height);
 
@@ -106,10 +194,37 @@ class RoomManager {
           furnitureData.y,
           furnitureData.width,
           furnitureData.height,
-          furnitureData.rotation || 0
+          furnitureData.rotation || 0,
+          furnitureData.color || '#95a5a6'
         );
         room.addFurniture(furniture);
       });
+
+      // Load windows if they exist
+      if (roomData.windows) {
+        roomData.windows.forEach(windowData => {
+          const window = new Window(
+            windowData.id,
+            windowData.wall,
+            windowData.position,
+            windowData.width
+          );
+          room.addWindow(window);
+        });
+      }
+
+      // Load doors if they exist
+      if (roomData.doors) {
+        roomData.doors.forEach(doorData => {
+          const door = new Door(
+            doorData.id,
+            doorData.wall,
+            doorData.position,
+            doorData.width
+          );
+          room.addDoor(door);
+        });
+      }
 
       this.rooms.push(room);
     });

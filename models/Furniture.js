@@ -1,5 +1,5 @@
 class Furniture {
-  constructor(id, name, x, y, width, height, rotation = 0) {
+  constructor(id, name, x, y, width, height, rotation = 0, color = '#95a5a6') {
     this.id = id;
     this.name = name;
     this.x = x;
@@ -7,6 +7,7 @@ class Furniture {
     this.width = width;
     this.height = height;
     this.rotation = rotation; // in degrees
+    this.color = color; // furniture color
   }
 
   // Get center point of furniture
