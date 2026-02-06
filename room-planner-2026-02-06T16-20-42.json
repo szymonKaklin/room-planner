@@ -1,0 +1,38 @@
+{
+  "rooms": [
+    {
+      "id": 1,
+      "name": "Bedroom 1",
+      "width": 288,
+      "height": 396,
+      "furniture": [
+        {
+          "id": 1,
+          "name": "Double Bed",
+          "x": 65,
+          "y": 27,
+          "width": 135,
+          "height": 190,
+          "rotation": 0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Bedroom 2",
+      "width": 251,
+      "height": 350,
+      "furniture": []
+    },
+    {
+      "id": 3,
+      "name": "Living Room",
+      "width": 513,
+      "height": 546,
+      "furniture": []
+    }
+  ],
+  "activeRoomId": 1,
+  "nextRoomId": 4,
+  "nextFurnitureId": 2
+}

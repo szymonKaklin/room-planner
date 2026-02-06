@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Planner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h1>Room Planner</h1>
+
+      <!-- Room Selector -->
+      <section>
+        <h2>Rooms</h2>
+        <select id="room-selector">
+          <option value="">No rooms yet</option>
+        </select>
+        <button id="delete-room-btn" class="delete-btn">Delete Room</button>
+      </section>
+
+      <!-- Create Room Form -->
+      <section>
+        <h3>Create Room</h3>
+        <form id="create-room-form">
+          <input type="text" id="room-name" placeholder="Room name" required>
+          <input type="number" id="room-width" placeholder="Width (px)" min="100" max="800" required>
+          <input type="number" id="room-height" placeholder="Height (px)" min="100" max="600" required>
+          <button type="submit">Create Room</button>
+        </form>
+      </section>
+
+      <!-- Add Furniture Form -->
+      <section>
+        <h3>Add Furniture</h3>
+        <form id="add-furniture-form">
+          <input type="text" id="furniture-name" placeholder="Furniture name" required>
+          <input type="number" id="furniture-width" placeholder="Width (px)" min="10" required>
+          <input type="number" id="furniture-height" placeholder="Height (px)" min="10" required>
+          <button type="submit">Add Furniture</button>
+        </form>
+      </section>
+
+      <!-- Save/Load -->
+      <section>
+        <h3>Save / Load</h3>
+        <button id="save-btn" class="save-btn">Save to File</button>
+        <input type="file" id="load-input" accept=".json" style="display: none;">
+        <button id="load-btn" class="load-btn">Load from File</button>
+      </section>
+
+      <!-- Instructions -->
+      <section class="instructions">
+        <h3>Instructions</h3>
+        <ul>
+          <li>Create rooms with dimensions</li>
+          <li>Add furniture to active room</li>
+          <li>Click furniture to select it</li>
+          <li>Drag furniture to move it</li>
+          <li>Press <strong>R</strong> to rotate clockwise</li>
+          <li>Press <strong>E</strong> to rotate counter-clockwise</li>
+          <li>Press <strong>Delete</strong> to remove furniture</li>
+          <li>Press <strong>Esc</strong> to deselect</li>
+          <li>Use "Delete Room" button to remove room</li>
+          <li>Use "Save to File" to export your design</li>
+          <li>Use "Load from File" to import saved design</li>
+        </ul>
+      </section>
+    </aside>
+
+    <main class="canvas-container">
+      <canvas id="canvas" width="800" height="600"></canvas>
+    </main>
+  </div>
+
+  <!-- Load modules in dependency order -->
+  <script src="models/Room.js"></script>
+  <script src="models/Furniture.js"></script>
+  <script src="utils/collision.js"></script>
+  <script src="services/RoomManager.js"></script>
+  <script src="services/Renderer.js"></script>
+  <script src="utils/drag.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // Initialize app when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      window.app = new App();
+    });
+  </script>
+</body>
+</html>
